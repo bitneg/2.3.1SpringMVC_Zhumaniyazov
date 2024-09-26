@@ -18,7 +18,7 @@ public class UserController {
     @GetMapping("/users")
     public String listUsers(Model model) {
         model.addAttribute("users", userService.findAll());
-        return "userlist"; // Имя представления
+        return "userlist";
     }
 
     @PostMapping("/users/add")
