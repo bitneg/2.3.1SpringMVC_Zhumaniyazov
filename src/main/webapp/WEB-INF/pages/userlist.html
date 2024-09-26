@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>User List</title>
 </head>
 <body>
@@ -25,7 +26,9 @@
                 </form>
                 <form action="/users/update" method="POST">
                     <input type="hidden" th:value="${user.id}" name="id">
-                    <input type="text" th:value="${user.name}" name="name" required>
+                    <label>
+                        <input type="text" th:value="${user.name}" name="name" required>
+                    </label>
                     <button type="submit">Update</button>
                 </form>
             </div>

@@ -22,8 +22,10 @@ public class UserController {
     }
 
     @PostMapping("/users/add")
-    public String addUser(@ModelAttribute User user) {
-           userService.save(user);
+    public String addUser(@RequestParam String name) {
+        User user = new User();
+        user.setName(name);
+        userService.save(user);
         return s;
     }
 
