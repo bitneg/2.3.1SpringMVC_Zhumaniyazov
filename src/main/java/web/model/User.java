@@ -1,5 +1,8 @@
 package web.model;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,7 +11,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+@NotEmpty(message = "имя не должно быть пустым")
+@Size(min = 2, max = 30, message = "длина имени должна быть в диапазоне от 2 до 30")
     private String name;
 
 

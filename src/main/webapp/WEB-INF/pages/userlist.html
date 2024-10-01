@@ -1,39 +1,47 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>User List</title>
+    <title>Список пользователей</title>
+
 </head>
 <body>
-<h1>Users</h1>
+<h1>Пользователи</h1>
 
-<form action="/users/add" method="POST">
-    <label for="name">Enter name</label>
-    <input type="text" name="name" placeholder="name" required id="name">
-    <button type="submit">Add User</button>
+<form th:action="@{/users/add}" method="post" th:object="${user}">
+    <input type="hidden" th:field="*{id}" />
+    <label for="name">Имя:</label>
+    <input type="text" id="name" th:field="*{name}">
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+    <button type="submit">Добавить пользователя</button>
 </form>
-<ul>
-    <th:block th:each="user : ${users}">
-        <li>
-            <div>
-                <span th:text="${user.name}">Name</span>
-                <span th:text="' (ID: ' + ${user.id} + ')'"> (ID: 1)</span>
-            </div>
-            <div>
-                <form action="/users/delete" method="POST">
-                    <input type="hidden" th:value="${user.id}" name="id">
-                    <button type="submit">Delete</button>
-                </form>
-                <form action="/users/update" method="POST">
-                    <input type="hidden" th:value="${user.id}" name="id">
-                    <label>
-                        <input type="text" th:value="${user.name}" name="name" required>
-                    </label>
-                    <button type="submit">Update</button>
-                </form>
-            </div>
-        </li>
-    </th:block>
-</ul>
+
+<h2>Существующие пользователи</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td>
+            <form th:action="@{/users/delete}" method="post">
+                <input type="hidden" name="id" th:value="${user.id}" />
+                <button type="submit">Удалить</button>
+            </form>
+            <form th:action="@{/users/update}" method="post" th:object="${user}">
+                <input type="hidden" th:field="*{id}" />
+                <label for="updateName">Обновить имя:</label>
+                <input type="text" id="updateName" th:field="*{name}" />
+                <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+                <button type="submit">Обновить</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
